@@ -217,6 +217,8 @@ for station_name in station_list:
 			line, = ax.plot(ez, 'r,')
 			line, = ax.plot(en, 'g,')
 
+			# ToDo : format image and add legend
+
 
 			file_name = station_name + "." + start.strftime("%Y.%j") + "." + end.strftime("%Y.%j") + ".png"
 			plt.savefig(file_name, bbox_inches='tight', dpi=72)
