@@ -64,18 +64,17 @@ outer = MIMEMultipart()
 me = 'geoscopegui@ipgp.fr'
 
 
+# Add and image to the current email
+####################################
 
 def add_image(image_file):
 
     ctype, encoding = mimetypes.guess_type(image_file)
     if ctype is None or encoding is not None:
-        # No guess could be made, or the file is encoded (compressed), so
-        # use a generic bag-of-bits type.
         ctype = 'application/octet-stream'
     maintype, subtype = ctype.split('/', 1)
     if maintype == 'text':
         fp = open(fichier)
-        # Note: we should handle calculating the charset
         msg = MIMEText(fp.read(), _subtype=subtype)
         fp.close()
     elif maintype == 'image':
@@ -87,25 +86,19 @@ def add_image(image_file):
         msg = MIMEBase(maintype, subtype)
         msg.set_payload(fp.read())
         fp.close()
-        # Encode the payload using Base64
         encoders.encode_base64(msg)
-    # Set the filename parameter
-    msg.add_header(
-        'Content-Disposition', 'attachment', filename=image_file)
+    msg.add_header('Content-Disposition', 'attachment', filename=image_file)
     outer.attach(msg)
     os.remove(image_file)
 
 
-def create_mail():
-    # Create a text/plain message
-    outer = MIMEMultipart()
-
+## Format and send the final email
+##################################
 
 def send_mail():
     outer['Subject'] = 'RMS'
     outer['From'] = me
 
-    # Now send or store the message
     composed = outer.as_string()
 
     s = smtplib.SMTP(smtp)
@@ -114,53 +107,20 @@ def send_mail():
     s.quit()
 
 
-def send_image(image_file):
-    # Create a text/plain message
-    outer = MIMEMultipart()
-    outer['Subject'] = 'RMS'
-    outer['From'] = 'GEOSCOPE'
-
-    ctype, encoding = mimetypes.guess_type(image_file)
-    if ctype is None or encoding is not None:
-        # No guess could be made, or the file is encoded (compressed), so
-        # use a generic bag-of-bits type.
-        ctype = 'application/octet-stream'
-    maintype, subtype = ctype.split('/', 1)
-    if maintype == 'text':
-        fp = open(fichier)
-        # Note: we should handle calculating the charset
-        msg = MIMEText(fp.read(), _subtype=subtype)
-        fp.close()
-    elif maintype == 'image':
-        fp = open(image_file, 'rb')
-        msg = MIMEImage(fp.read(), _subtype=subtype)
-        fp.close()
-    else:
-        fp = open(image_file, 'rb')
-        msg = MIMEBase(maintype, subtype)
-        msg.set_payload(fp.read())
-        fp.close()
-        # Encode the payload using Base64
-        encoders.encode_base64(msg)
-    # Set the filename parameter
-    msg.add_header(
-        'Content-Disposition', 'attachment', filename=image_file)
-    outer.attach(msg)
-    # Now send or store the message
-    composed = outer.as_string()
-
-    s = smtplib.SMTP(smtp)
-    for receiver in receivers:
-        s.sendmail(me, receiver, composed)
-    s.quit()
-    os.remove(image_file)
 
 
+## Beginning
+############
+
+# Bandpass filter frequencies
 freqmin = 0.1
 freqmax = 0.5
 
+
+# Loop over stations
 for station_name in station_list:
 
+	# Loop over locid
 	for loc_id in loc_id_list:
 	
 		t1 = start
