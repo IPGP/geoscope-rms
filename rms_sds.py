@@ -1,10 +1,42 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Sep 12 12:59:55 2018
 
-@author: leroy
-"""
+
+###############################################################################
+#    									      #
+#    This file contains a tool for daily seismic data quality control         #
+#    The method is using component energy ratios to                           #
+#    detect metadata and instrument problems of seismic stations.             #
+#                                                                             #
+#    Copyright (C) 2019 Nicolas Leroy                                         #
+#									      #
+#    If you use this software, either as is or in a modified form,            #
+#    please refer to the following publication:                               #
+#    Pedersen, H. A., N. Leroy, D. Zigone, M. Vallée, A. T. Ringler           #
+#    and Wilson, D. C., 2019. Using component ratios to detect metadata       #
+#    and instrument problems of seismic stations: examples from 18 years      #
+#    of GEOSCOPE data. Seismological Research, VOL, PAGES tbc                 #
+#                                                                             #
+#    This program is free software: you can redistribute it and/or modify     #
+#    it under the terms of the GNU General Public License as published by     #
+#    the Free Software Foundation, either version 3 of the License, or        #
+#    (at your option) any later version.                                      #
+#                                                                             #
+#    This program is distributed in the hope that it will be useful,          #
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of           #
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the             #
+#    GNU General Public License for more details.                             #
+#                                                                             #
+#    You should have received a copy of the GNU General Public License        #
+#    along with this program. If not, see <https://www.gnu.org/licenses/>.    #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#    									      #
+#     To Do : exact description of the tool				      #
+#    									      #
+##############################################################################
 
 import smtplib
 from email import encoders
